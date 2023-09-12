@@ -13,6 +13,7 @@ static const float focuscolor[]            = COLOR(0x9966ccff);
 static const float urgentcolor[]           = COLOR(0xff0000ff);
 /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You can also use glsl colors */
+static const int center_relative_to_monitor = 0; /* 0 means center floating relative to the window area */
 
 /* tagging - TAGCOUNT must be no greater than 31 */
 #define TAGCOUNT (9)
@@ -21,11 +22,11 @@ static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You ca
 static int log_level = WLR_ERROR;
 
 static const Rule rules[] = {
-	/* app_id     title       tags mask     isfloating   monitor */
+	/* app_id     title       tags mask     isfloating   monitor x   y  width height */
 	/* examples:
-	{ "Gimp",     NULL,       0,            1,           -1 },
+	{ "Gimp",     NULL,       0,            1,           -1,     0,  0, 1000, 0.75 },
 	*/
-	{ "carla",    NULL,       1 << 8,       0,           0 },
+	{ "carla",    NULL,       1 << 8,       0,           0,      0,  0, 0,    0 },
 };
 
 /* layout(s) */
