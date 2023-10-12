@@ -346,6 +346,7 @@ static void urgent(struct wl_listener *listener, void *data);
 static void view(const Arg *arg);
 static void virtualkeyboard(struct wl_listener *listener, void *data);
 static void virtualpointer(struct wl_listener *listener, void *data);
+static void warpcursor(const Client *c);
 static Monitor *xytomon(double x, double y);
 static void xytonode(double x, double y, struct wlr_surface **psurface,
 		Client **pc, LayerSurface **pl, double *nx, double *ny);
@@ -1270,6 +1271,10 @@ focusclient(Client *c, int lift)
 
 	if (locked)
 		return;
+
+    /* Warp cursor to center of client if it is outside */
+    if (c)
+		warpcursor(c);
 
 	/* Raise client in stacking order if requested */
 	if (c && lift)
@@ -2884,6 +2889,18 @@ virtualpointer(struct wl_listener *listener, void *data)
 	wlr_cursor_attach_input_device(cursor, &pointer.base);
 	if (event->suggested_output)
 		wlr_cursor_map_input_to_output(cursor, &pointer.base, event->suggested_output);
+}
+
+void
+warpcursor(const Client *c) {
+       if (cursor->x < c->geom.x ||
+               cursor->x > c->geom.x + c->geom.width ||
+               cursor->y < c->geom.y ||
+               cursor->y > c->geom.y + c->geom.height)
+               wlr_cursor_warp_closest(cursor,
+                         NULL,
+                         c->geom.x + c->geom.width / 2.0,
+                         c->geom.y + c->geom.height / 2.0);
 }
 
 Monitor *
