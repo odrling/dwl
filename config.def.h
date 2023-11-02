@@ -51,7 +51,7 @@ static const struct xkb_rule_names xkb_rules = {
 	/* can specify fields: rules, model, layout, variant, options */
 	.layout = "fr",
 	.variant = "oss",
-	.options = "caps:escape,shift:both_capslock",
+	.options = "caps:escape",
 };
 
 static const int repeat_rate = 25;
