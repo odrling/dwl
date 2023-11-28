@@ -760,9 +760,11 @@ void
 commitnotify(struct wl_listener *listener, void *data)
 {
 	Client *c = wl_container_of(listener, c, commit);
+	Monitor *m = c->mon;
+	int n = 0, draw_borders = 1;
 
 	if (client_surface(c)->mapped)
-		resize(c, c->geom, (c->isfloating && !c->isfullscreen));
+		resize(c, c->geom, (c->isfloating && !c->isfullscreen), c->bw);
 
 	/* mark a pending resize as completed */
 	if (c->resize && c->resize <= c->surface.xdg->current.configure_serial)
@@ -2666,7 +2668,7 @@ updatemons(struct wl_listener *listener, void *data)
 		arrange(m);
 		/* make sure fullscreen clients have the right size */
 		if ((c = focustop(m)) && c->isfullscreen)
-			resize(c, m->m, 0);
+			resize(c, m->m, 0, 0);
 
 		m->gamma_lut_changed = 1;
 		config_head->state.enabled = 1;
