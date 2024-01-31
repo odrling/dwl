@@ -115,7 +115,7 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *termcmd[] = { "footclient", NULL };
+static const char *termcmd[] = { "odrfootclient", NULL };
 static const char *menucmd[] = { "rofi", "-show", "run", NULL };
 static const char *backlightdown[] = { "backlight", "-", "5", NULL };
 static const char *backlightup[] = { "backlight", "+", "5", NULL };
